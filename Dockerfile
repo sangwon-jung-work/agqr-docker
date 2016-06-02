@@ -17,4 +17,4 @@ RUN ldconfig
 RUN touch /tmp/cron.log
 COPY src/rec.sh rec.sh
 
-CMD /sbin/init && cron && tail -f /tmp/cron.log
+CMD /sbin/init && tail -f /tmp/cron.log
