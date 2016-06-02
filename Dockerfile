@@ -14,6 +14,7 @@ RUN echo "/usr/local/lib" > /etc/ld.so.conf.d/rtmpdump.conf
 RUN ldconfig
 # http://blogs.yahoo.co.jp/mrsd_tangerine/40359620.html
 
+RUN touch /tmp/cron.log
 COPY src/rec.sh rec.sh
 
-CMD /sbin/init
+CMD /sbin/init && cron && tail -f /tmp/cron.log
