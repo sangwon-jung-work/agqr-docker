@@ -5,7 +5,7 @@ MAINTAINER gecko655 <aqwsedrft1234@yahoo.co.jp>
 WORKDIR /root
 
 RUN echo "set -o vi" >> /etc/bashrc
-RUN yum update
+RUN yum update -y
 RUN yum install git gcc openssl-devel make crontabs -y
 
 RUN git clone git://git.ffmpeg.org/rtmpdump
