@@ -17,7 +17,8 @@ RUN ldconfig
 
 RUN wget http://www.swftools.org/swftools-0.9.2.tar.gz
 RUN tar xvzf swftools-0.9.2.tar.gz
-RUN cp src/Makefile.in swftools-0.9.2/swfs/Makefile.in
+COPY src/swftools swftools
+RUN cp swftools/Makefile.in swftools-0.9.2/swfs/Makefile.in
 RUN (cd swftools-0.9.2 && ./configure --prefix=/usr --libdir=/usr/lib64 && make && make install)
 RUN rm -f swftools-0.9.2.tar.gz
 RUN rm -rf swftools-0.9.2
