@@ -5,6 +5,7 @@ MAINTAINER gecko655 <aqwsedrft1234@yahoo.co.jp>
 WORKDIR /root
 
 RUN echo "set -o vi" >> /etc/bashrc
+RUN cp -p /usr/share/zoneinfo/Japan /etc/localtime
 # RUN yum update -y
 RUN yum install git gcc openssl-devel make crontabs wget -y
 
