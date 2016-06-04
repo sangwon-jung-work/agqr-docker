@@ -5,7 +5,7 @@ MAINTAINER gecko655 <aqwsedrft1234@yahoo.co.jp>
 WORKDIR /root
 
 RUN echo "set -o vi" >> /etc/bashrc
-RUN yum update -y
+# RUN yum update -y
 RUN yum install git gcc openssl-devel make crontabs wget -y
 
 RUN git clone git://git.ffmpeg.org/rtmpdump
@@ -22,7 +22,7 @@ RUN (cd swftools-0.9.2 && ./configure --prefix=/usr --libdir=/usr/lib64 && make 
 RUN rm -f swftools-0.9.2.tar.gz
 RUN rm -rf swftools-0.9.2
 
-RUN ln -s /dev/stdout /tmp/cron.log
+RUN /tmp/cron.log
 COPY crontab.config .
 RUN (crontab -l; cat crontab.config ) | crontab
 
