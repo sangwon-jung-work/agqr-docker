@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This source was originated in https://gist.github.com/matchy2/3956266
+
 LANG=ja_JP.utf8
 
 pid=$$
