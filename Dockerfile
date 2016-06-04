@@ -29,5 +29,6 @@ RUN (crontab -l; cat crontab.config ) | crontab
 
 COPY src/rec.sh rec.sh
 COPY src/radiko.sh radiko.sh
+COPY src/init.sh init.sh
 
 CMD /sbin/init
