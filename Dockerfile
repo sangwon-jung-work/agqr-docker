@@ -23,7 +23,7 @@ RUN (cd swftools-0.9.2 && ./configure --prefix=/usr --libdir=/usr/lib64 && make 
 RUN rm -f swftools-0.9.2.tar.gz
 RUN rm -rf swftools-0.9.2
 
-RUN /tmp/cron.log
+RUN touch /tmp/cron.log
 COPY crontab.config .
 RUN (crontab -l; cat crontab.config ) | crontab
 
