@@ -16,6 +16,7 @@ RUN ldconfig
 # http://blogs.yahoo.co.jp/mrsd_tangerine/40359620.html
 
 RUN ln -s /dev/stdout /tmp/cron.log
+COPY crontab.config .
 RUN (crontab -l; cat crontab.config ) | crontab
 
 COPY src/rec.sh rec.sh
