@@ -1,2 +1,2 @@
-yum update
+yum update -y
 systemctl start crond
