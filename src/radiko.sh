@@ -141,7 +141,7 @@ rm -f ${channel}.xml
 # rtmpdump
 #
 #rtmpdump -q \
-rtmpdump \
+/usr/local/bin/rtmpdump \
          -r ${url_parts[0]} \
          --app ${url_parts[1]} \
          --playpath ${url_parts[2]} \
