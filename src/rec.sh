@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ $# -lt 1 ]; then
-  echo "usage: ./$0 length-to-record[sec] [title]"
+  echo "usage: $0 length-to-record[sec] [title]"
   exit 1
 fi
 length=$1
