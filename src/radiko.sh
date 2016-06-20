@@ -10,7 +10,7 @@ playerurl=http://radiko.jp/player/swf/player_3.0.0.01.swf
 playerfile="/tmp/player.swf"
 keyfile="/tmp/authkey.png"
 
-outdir="."
+outdir="/opt/agqr/"
 
 if [ $# -le 1 ]; then
   echo "usage : $0 channel_name duration(minuites) [outputdir] [prefix]"
@@ -149,5 +149,5 @@ rm -f ${channel}.xml
          -C S:"" -C S:"" -C S:"" -C S:$authtoken \
          --live \
          --stop ${DURATION} \
-         --flv "/tmp/${channel}_${date}.flv"
+         --flv "${outdir}/${channel}_${date}.flv"
 
