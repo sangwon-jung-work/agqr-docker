@@ -149,4 +149,4 @@ rm -f ${channel}.xml
          -C S:"" -C S:"" -C S:"" -C S:$authtoken \
          --live \
          --stop ${DURATION} \
-         --flv "/tmp/${channel}_${date}.flv"
+         --flv "${outdir}/${channel}_${date}.flv"
