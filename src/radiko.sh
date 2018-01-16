@@ -6,7 +6,7 @@ LANG=ja_JP.utf8
 
 pid=$$
 date=`date '+%Y-%m-%d-%H_%M'`
-playerurl=http://radiko.jp/player/swf/player_3.0.0.01.swf
+playerurl=http://radiko.jp/apps/js/flash/myplayer-release.swf
 playerfile="/tmp/player.swf"
 keyfile="/tmp/authkey.png"
 
@@ -45,7 +45,7 @@ fi
 # get keydata (need swftool)
 #
 if [ ! -f $keyfile ]; then
-  swfextract -b 14 $playerfile -o $keyfile
+  swfextract -b 12 $playerfile -o $keyfile
 
   if [ ! -f $keyfile ]; then
     echo "failed get keydata"
@@ -62,8 +62,8 @@ fi
 #
 wget -q \
      --header="pragma: no-cache" \
-     --header="X-Radiko-App: pc_1" \
-     --header="X-Radiko-App-Version: 2.0.1" \
+     --header="X-Radiko-App: pc_ts" \
+     --header="X-Radiko-App-Version: 4.0.0" \
      --header="X-Radiko-User: test-stream" \
      --header="X-Radiko-Device: pc" \
      --post-data='\r\n' \
@@ -99,12 +99,12 @@ fi
 #
 wget -q \
      --header="pragma: no-cache" \
-     --header="X-Radiko-App: pc_1" \
-     --header="X-Radiko-App-Version: 2.0.1" \
+     --header="X-Radiko-App: pc_ts" \
+     --header="X-Radiko-App-Version: 4.0.0" \
      --header="X-Radiko-User: test-stream" \
      --header="X-Radiko-Device: pc" \
-     --header="X-Radiko-Authtoken: ${authtoken}" \
-     --header="X-Radiko-Partialkey: ${partialkey}" \
+     --header="X-Radiko-AuthToken: ${authtoken}" \
+     --header="X-Radiko-PartialKey: ${partialkey}" \
      --post-data='\r\n' \
      --no-check-certificate \
      -O auth2_fms_${pid} \
@@ -149,5 +149,4 @@ rm -f ${channel}.xml
          -C S:"" -C S:"" -C S:"" -C S:$authtoken \
          --live \
          --stop ${DURATION} \
-         --flv "${outdir}/${channel}_${date}.flv"
-
+         --flv "/tmp/${channel}_${date}.flv"
