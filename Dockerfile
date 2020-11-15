@@ -1,36 +1,16 @@
-FROM centos
+FROM ubuntu:16.04
+MAINTAINER swjung89 <sangwon-jung-work@gmail.com>
 
-MAINTAINER gecko655 <aqwsedrft1234@yahoo.co.jp>
-
-WORKDIR /root
-
-RUN echo "set -o vi" >> /etc/bashrc
-RUN cp -p /usr/share/zoneinfo/Japan /etc/localtime
-# RUN yum update -y
-RUN yum install git gcc openssl-devel make crontabs wget -y
-
-RUN git clone git://git.ffmpeg.org/rtmpdump
-RUN (cd rtmpdump && make SYS=posix && make install)
-# http://qiita.com/yayugu/items/12c0ffd92bc8539098b8
-RUN echo "/usr/local/lib" > /etc/ld.so.conf.d/rtmpdump.conf 
-RUN ldconfig
-# http://blogs.yahoo.co.jp/mrsd_tangerine/40359620.html
-
-RUN wget http://www.swftools.org/swftools-0.9.2.tar.gz
-RUN tar xvzf swftools-0.9.2.tar.gz
-COPY src/swftools swftools
-RUN cp swftools/Makefile.in swftools-0.9.2/swfs/Makefile.in
-RUN (cd swftools-0.9.2 && ./configure --prefix=/usr --libdir=/usr/lib64 && make && make install)
-RUN rm -f swftools-0.9.2.tar.gz
-RUN rm -rf swftools-0.9.2
-
-RUN mkdir -p /opt/agqr
-RUN touch /tmp/cron.log
-COPY crontab.config .
-RUN (crontab -l; cat crontab.config ) | crontab
-
-COPY src/rec.sh rec.sh
-COPY src/radiko.sh radiko.sh
-COPY src/init.sh init.sh
-
-CMD /sbin/init
+RUN apt-get update -y && apt-get install -y software-properties-common build-essential libxml2-utils rtmpdump wget git zlib1g-dev tzdata
+RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+RUN mkdir /var/src
+WORKDIR /var/src
+RUN wget http://www.tortall.net/projects/yasm/releases/yasm-1.2.0.tar.gz && tar zxvf yasm-1.2.0.tar.gz && cd yasm-1.2.0 && ./configure && make && make install
+RUN git clone git://source.ffmpeg.org/ffmpeg.git ffmpeg && cd ffmpeg && ./configure && make && make install
+RUN git clone git://github.com/matthiaskramm/swftools.git swftools && cd swftools && ./configure && make && make install
+RUN echo '/usr/local/lib' > /etc/ld.so.conf.d/local.conf && ldconfig
+ADD rec_agqr.sh /usr/local/bin/rec_agqr.sh
+RUN chmod +x /usr/local/bin/rec_agqr.sh
+RUN mkdir /var/agqr
+WORKDIR /var/agqr
+ENTRYPOINT ["/usr/local/bin/rec_agqr.sh"]
