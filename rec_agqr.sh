@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 # 2020.11.13 copy rec_agqr.sh
+# 2021.01.02 add FFREPORT (output log information variable)
 #
 
 if [ $# -lt 1 ]; then
@@ -16,7 +17,8 @@ fi
 
 length=$(($1 * 60))
 DATES=`date '+%Y%m%d'`
-title=${2-agqr}_$DATES
+PREFIX=${2-agqr}
+title=${PREFIX}_${DATES}
 outdir="."
 
 BASE_URL=https://www.uniqueradio.jp/agplayer5
@@ -96,6 +98,15 @@ streamurl=$( grep -m 1 -Rh m3u8 "${outdir}/tempUrl_${title}" )
 #echo "streamurl"
 #echo $streamurl
 
+
+# check exist log folder
+if [ ! -d $outdir/log ];
+then
+  mkdir $outdir/log
+fi
+
+# set ffmpeg log variable(output file info, set log level debug
+export FFREPORT=file=$outdir/log/agqr_$PREFIX.log.$DATES:level=48
 
 
 # start record
