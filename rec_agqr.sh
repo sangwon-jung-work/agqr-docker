@@ -52,16 +52,16 @@ fi
 
 
 # get player php url in main page's html
-curl --insecure "${BASE_URL}/player.php" -X GET | grep php > "${outdir}/tempTag1_${title}"
+curl --insecure "${BASE_URL}/player.php" -X GET | grep php > "${outdir}/${title}_tempTag1"
 
 if [ $? != 0 ]; then
-  echo "error player.php" > "${outdir}/tempTag1Error_${title}"
+  echo "error player.php" > "${outdir}/${title}_tempTag1Error"
 fi
 
 #echo "player"
-#cat "${outdir}/tempTag2_${title}"
+#cat "${outdir}/${title}_tempTag2"
 
-playerurl=$( xmllint --html --xpath //iframe/@src "${outdir}/tempTag1_${title}" | sed 's/ src="\([^"]*\)"/\1/g' )
+playerurl=$( xmllint --html --xpath //iframe/@src "${outdir}/${title}_tempTag1" | sed 's/ src="\([^"]*\)"/\1/g' )
 
 #echo "playerurl"
 #echo $playerurl
@@ -69,17 +69,17 @@ playerurl=$( xmllint --html --xpath //iframe/@src "${outdir}/tempTag1_${title}" 
 
 
 # get m3u8 line in player php page's html
-curl --insecure "${BASE_URL}/${playerurl}" -X GET | grep m3u8 > "${outdir}/tempTag2_${title}"
+curl --insecure "${BASE_URL}/${playerurl}" -X GET | grep m3u8 > "${outdir}/${title}_tempTag2"
 
 if [ $? != 0 ]; then
-  echo "error iframe.php" > "${outdir}/tempTag2Error_${title}"
+  echo "error iframe.php" > "${outdir}/${title}_tempTag2Error"
 fi
 
 #echo "source"
-#cat "${outdir}/tempTag2_${title}"
+#cat "${outdir}/${title}_tempTag2"
 
 # parse src string
-listurl=$( xmllint --html --xpath //source/@src "${outdir}/tempTag2_${title}" | sed 's/ src="\([^"]*\)"/\1/g' )
+listurl=$( xmllint --html --xpath //source/@src "${outdir}/${title}_tempTag2" | sed 's/ src="\([^"]*\)"/\1/g' )
 
 #echo "listurl"
 #echo $listurl
@@ -87,13 +87,13 @@ listurl=$( xmllint --html --xpath //source/@src "${outdir}/tempTag2_${title}" | 
 
 
 # get recording streaming url
-curl $BASE_URL/$listurl > "${outdir}/tempUrl_${title}"
+curl $BASE_URL/$listurl > "${outdir}/${title}_tempUrl"
 
 if [ $? != 0 ]; then
-  echo "error url" > "${outdir}/tempUrl_Error_${title}"
+  echo "error url" > "${outdir}/${title}_tempUrl_Error"
 fi
 
-streamurl=$( grep -m 1 -Rh m3u8 "${outdir}/tempUrl_${title}" )
+streamurl=$( grep -m 1 -Rh m3u8 "${outdir}/${title}_tempUrl" )
 
 #echo "streamurl"
 #echo $streamurl
@@ -116,8 +116,8 @@ ffmpeg -i "${streamurl}" -vcodec copy -acodec copy -t $length "${outdir}/${title
 
 # remove temp files
 if [ $? = 0 ]; then
-  rm -f "${outdir}/tempTag1_${title}" "${outdir}/tempTag2_${title}" "${outdir}/tempUrl_${title}"
+  rm -f "${outdir}/${title}_tempTag1" "${outdir}/${title}_tempTag2" "${outdir}/${title}_tempUrl"
 else
-  rm -f "${outdir}/tempTag1_${title}" "${outdir}/tempTag2_${title}" "${outdir}/tempUrl_${title}"
+  rm -f "${outdir}/${title}_tempTag1" "${outdir}/${title}_tempTag2" "${outdir}/${title}_tempUrl"
 fi
 
