@@ -3,6 +3,7 @@
 # 2020.11.13 copy rec_agqr.sh
 # 2021.01.02 add FFREPORT (output log information variable)
 # 2021.08.08 add reconnect_on_network_error option for Connection timed out
+# 2022.01.09 add referer header
 #
 
 if [ $# -lt 1 ]; then
@@ -22,7 +23,8 @@ PREFIX=${2-agqr}
 title=${PREFIX}_${DATES}
 outdir="."
 
-BASE_URL=https://www.uniqueradio.jp/agplayer5
+DOMAIN=https://www.uniqueradio.jp/
+BASE_URL="${DOMAIN}agplayer5"
 
 
 # check essential tools
@@ -111,7 +113,7 @@ export FFREPORT=file=$outdir/log/agqr_$PREFIX.log.$DATES:level=48
 
 
 # start record
-ffmpeg -reconnect_on_network_error 1 -i "${streamurl}" -vcodec copy -acodec copy -t $length "${outdir}/${title}.mp4"
+ffmpeg -reconnect_on_network_error 1 -headers "Referer: ${DOMAIN}" -i "${streamurl}" -vcodec copy -acodec copy -t $length "${outdir}/${title}.mp4"
 
 
 
