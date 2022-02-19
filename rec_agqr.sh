@@ -4,6 +4,7 @@
 # 2021.01.02 add FFREPORT (output log information variable)
 # 2021.08.08 add reconnect_on_network_error option for Connection timed out
 # 2022.01.09 add referer header
+# 2022.02.19 add exit 1 code on not success exit
 #
 
 if [ $# -lt 1 ]; then
@@ -122,5 +123,7 @@ if [ $? = 0 ]; then
   rm -f "${outdir}/${title}_tempTag1" "${outdir}/${title}_tempTag2" "${outdir}/${title}_tempUrl"
 else
   rm -f "${outdir}/${title}_tempTag1" "${outdir}/${title}_tempTag2" "${outdir}/${title}_tempUrl"
+  echo "exit on error"
+  exit 1
 fi
 
