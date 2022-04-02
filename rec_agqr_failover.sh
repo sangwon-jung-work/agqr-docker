@@ -1,6 +1,7 @@
 #!/bin/sh
 # agqr new recording shell(with while loop)
 # 2022.03.04 first create
+# 2022.04.02 change while condition le to lt
 #
 # ./rec_agqr_failover.sh 30 "AGQR_REC"
 #
@@ -30,7 +31,7 @@ echo "${PREFIX} agqr recoder will running ${TOTAL_SECONDS} sec"
 $DOCKER_HOME run --rm -v $REC_HOME:/var/agqr $IMAGE_NAME $REC_MIN $PREFIX .
 
 # Rework if finished 35 seconds earlier than the original work time
-while [ "$SECONDS" -le "$BUFF_SECONDS" ]
+while [ "$SECONDS" -lt "$BUFF_SECONDS" ]
 do
   echo "${PREFIX} agqr recoder finished less than ${BUFF_SECONDS} sec."
   
