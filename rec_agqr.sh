@@ -8,11 +8,6 @@
 # 2023.03.09 add extract stream_url by condition, file output log, modify temp file name
 #
 
-if [ $# -lt 1 ]; then
-  echo "usage: $0 length-to-record[min] [title] [outpath]"
-  exit 1
-fi
-
 if [ $# -lt 2 ]; then
   echo "usage: $0 length-to-record[min] [title] [outpath]"
   exit 1
@@ -30,7 +25,7 @@ BASE_URL="${DOMAIN}agplayer5"
 
 AGQR_TEMP1="${OUTDIR}/${TITLE}_1player"
 AGQR_TEMP2="${OUTDIR}/${TITLE}_2iframe"
-AGQR_TEMP3="${OUTDIR}/${TITLE}_3player"
+AGQR_TEMP3="${OUTDIR}/${TITLE}_3stream"
 AGQR_TEMP4="${OUTDIR}/${TITLE}.mp4"
 
 LOG_FILE="${OUTDIR}/log/agqr_shell_${PREFIX}.log.$TODAY"
