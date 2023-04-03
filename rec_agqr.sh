@@ -6,6 +6,7 @@
 # 2022.01.09 add referer header
 # 2022.02.19 add exit 1 code on not success exit
 # 2023.03.09 add extract stream_url by condition, file output log, modify temp file name
+# 2023.04.03 modify new url pattern after maintanance
 #
 
 if [ $# -lt 2 ]; then
@@ -20,8 +21,8 @@ PREFIX=${2-AGQR}
 TITLE=${PREFIX}_${TODAY}
 OUTDIR="."
 
-DOMAIN=https://www.uniqueradio.jp/
-BASE_URL="${DOMAIN}agplayer5"
+DOMAIN=https://www.uniqueradio.jp
+BASE_URL="${DOMAIN}/agplayer5"
 
 AGQR_TEMP1="${OUTDIR}/${TITLE}_1player"
 AGQR_TEMP2="${OUTDIR}/${TITLE}_2iframe"
@@ -123,7 +124,7 @@ then
   
 else
   
-  curl -o $AGQR_TEMP3 $BASE_URL/$SOURCE_URL
+  curl -o $AGQR_TEMP3 $DOMAIN$SOURCE_URL
   
   if [ $? != 0 ];
   then
@@ -171,7 +172,7 @@ writelog "STREAM_URL ${STREAM_URL}"
 export FFREPORT=file=$OUTDIR/log/agqr_ffmpeg_$PREFIX.log.$TODAY:level=48
 
 # start record 
-ffmpeg -reconnect_on_network_error 1 -headers "Referer: ${DOMAIN}" -i "${STREAM_URL}" -vcodec copy -acodec copy -t $LENGTH "${AGQR_TEMP4}"
+ffmpeg -reconnect_on_network_error 1 -headers "Referer: ${DOMAIN}/" -i "${STREAM_URL}" -vcodec copy -acodec copy -t $LENGTH "${AGQR_TEMP4}"
 
 # remove temp files
 if [ $? = 0 ]; then
