@@ -7,6 +7,7 @@
 # 2022.02.19 add exit 1 code on not success exit
 # 2023.03.09 add extract stream_url by condition, file output log, modify temp file name
 # 2023.04.03 modify new url pattern after maintanance
+# 2023.04.15 add ffmpeg discardcorrupt flag
 #
 
 if [ $# -lt 2 ]; then
@@ -172,7 +173,7 @@ writelog "STREAM_URL ${STREAM_URL}"
 export FFREPORT=file=$OUTDIR/log/agqr_ffmpeg_$PREFIX.log.$TODAY:level=48
 
 # start record 
-ffmpeg -reconnect_on_network_error 1 -headers "Referer: ${DOMAIN}/" -i "${STREAM_URL}" -vcodec copy -acodec copy -t $LENGTH "${AGQR_TEMP4}"
+ffmpeg -reconnect_on_network_error 1 -fflags discardcorrupt -headers "Referer: ${DOMAIN}/" -i "${STREAM_URL}" -vcodec copy -acodec copy -t $LENGTH "${AGQR_TEMP4}"
 
 # remove temp files
 if [ $? = 0 ]; then
