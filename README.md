@@ -1,7 +1,9 @@
 # agqr-docker
 文化放送 超！A＆G+ 스트림 방송을 저장하는 환경을 Docker에 구현
 
-*(접속지역에는 제한이 없으나, 추후 文化放送 의 정책 변경에 따라 달라질 수 있습니다)*
+*2025.03.31 부로 超！A＆G+ 는 QloveR 라는 플랫폼으로 이관되어 사용 불가합니다*
+
+~~(접속지역에는 제한이 없으나, 추후 文化放送 의 정책 변경에 따라 달라질 수 있습니다)~~
 
 ## 사용법
 ```sh
@@ -25,7 +27,7 @@ cd agqr-docker
 # if install github cli
 gh auth login
 
-FFMPEG_URL=$( gh api --jq '.assets[8]."browser_download_url"' -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /repos/yt-dlp/FFmpeg-Builds/releases/latest )
+FFMPEG_URL=$( gh api --jq '.assets[1]."browser_download_url"' -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /repos/yt-dlp/FFmpeg-Builds/releases/latest )
 #
 # if just copy url
 FFMPEG_URL=(paste that url)
